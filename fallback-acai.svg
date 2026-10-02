@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7eaff"/><stop offset="1" stop-color="#fff3fb"/></linearGradient>
+  <linearGradient id="cup" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5b159d"/><stop offset="1" stop-color="#8b2bd1"/></linearGradient>
+</defs>
+<rect width="800" height="800" rx="80" fill="url(#bg)"/>
+<ellipse cx="400" cy="650" rx="240" ry="45" fill="#d8b9df" opacity=".45"/>
+<path d="M235 260h330l-35 365c-4 39-35 68-74 68H344c-39 0-70-29-74-68z" fill="url(#cup)"/>
+<ellipse cx="400" cy="270" rx="165" ry="58" fill="#3b0b70"/>
+<ellipse cx="400" cy="278" rx="145" ry="42" fill="#6d20aa"/>
+<circle cx="325" cy="250" r="28" fill="#f5c6e9"/><circle cx="390" cy="238" r="24" fill="#fff"/><circle cx="450" cy="255" r="27" fill="#f4b6d8"/><circle cx="500" cy="245" r="20" fill="#ffd36b"/>
+<path d="M310 345h180" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".8"/>
+<text x="400" y="470" text-anchor="middle" font-family="Arial,sans-serif" font-size="58" font-weight="700" fill="#fff">AÇAÍ</text>
+<text x="400" y="525" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" fill="#f4dcff">Guh Açaí</text>
+</svg>
