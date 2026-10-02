@@ -1,0 +1,54 @@
+name: Persist site data and uploads
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  persist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync live state
+        env:
+          SITE_URL: https://guh-acai-site.onrender.com
+        run: |
+          set -e
+          mkdir -p data uploads
+          curl -fsS --retry 3 --max-time 30 "$SITE_URL/api/state" -o data/state.json
+
+          jq -r '
+            [
+              .settings.logo,
+              .settings.aboutImage,
+              .settings.promoSlide1,
+              .settings.promoSlide2,
+              .settings.promoSlide3,
+              (.products[]?.img)
+            ]
+            | .[]
+            | select(type == "string" and startswith("/uploads/"))
+          ' data/state.json | sort -u | while IFS= read -r asset; do
+            [ -n "$asset" ] || continue
+            file=".${asset}"
+            mkdir -p "$(dirname "$file")"
+            curl -fsS --retry 3 --max-time 60 "$SITE_URL$asset" -o "$file"
+          done
+
+      - name: Commit persisted state
+        run: |
+          git config user.name "guh-acai-bot"
+          git config user.email "guh-acai-bot@users.noreply.github.com"
+          git add data/state.json uploads
+          if git diff --cached --quiet; then
+            echo "No state or image changes."
+            exit 0
+          fi
+          git commit -m "Persist Guh Açaí catalog and images"
+          git push
