@@ -76,35 +76,19 @@ let SITE_SETTINGS = {...DEFAULT_SETTINGS};
 try { SITE_SETTINGS = {...DEFAULT_SETTINGS, ...(JSON.parse(localStorage.getItem("guhAcaiSettingsV1")||"{}"))}; } catch(e) {}
 const WHATSAPP_NUMBER = SITE_SETTINGS.whatsapp || "5531988405083";
 let products=[
-{id:"tradicional",cat:"acai",name:"Tradicional",desc:"Creme de açaí, banana, granola, leite em pó e leite condensado.",img:"tradicional.jpg",sizes:{500:22,700:28,1000:37}},
-{id:"mineiro",cat:"acai",name:"Mineiro",desc:"Creme de açaí, paçoca, leite em pó e leite condensado.",img:"acai-mineiro.jpg",sizes:{500:23,700:29,1000:38}},
-{id:"sensacao",cat:"acai",name:"Sensação",desc:"Creme de açaí, Nutella, canudinho, bombom, leite em pó, leite condensado e gotas de chocolate.",img:"sensacao.jpg",sizes:{500:26,700:32,1000:40}},
-{id:"xmorango",cat:"acai",name:"Xmorango",desc:"Creme de açaí, morango, creme de Nutella e leite condensado.",img:"xmorango.jpg",sizes:{500:27,700:33,1000:42}},
-{id:"mix",cat:"acai",name:"Mix de frutas",desc:"Creme de açaí, leite em pó, banana, kiwi, morango, manga e leite condensado.",img:"mix-frutas.jpg",sizes:{500:26,700:33,1000:42}},
-{id:"tradmorango",cat:"acai",name:"Tradicional Morango",desc:"Creme de açaí, banana, morango, granola, leite em pó e leite condensado.",img:"tradicional-morango.jpg",sizes:{500:24,700:30,1000:40}},
-{id:"tnm",cat:"acai",name:"Trufado Ninho & Morango",desc:"Creme de açaí, Ninho, bis, gotas de chocolate, Nutella, leite em pó e leite condensado.",img:"trufado-ninho-morango.jpg",sizes:{500:28,700:35,1000:45}},
-{id:"tmar",cat:"acai",name:"Trufado Maracujá",desc:"Creme de açaí, bis, chocolate, creme de maracujá, Nutella, leite em pó e leite condensado.",img:"trufado-maracuja.jpg",sizes:{500:30,700:41,1000:50}},
-{id:"tn",cat:"acai",name:"Trufado Ninho",desc:"Creme de açaí, Ninho, bis, chocolate, Nutella, leite em pó e leite condensado.",img:"trufado-ninho-2.jpg",sizes:{500:30,700:41,1000:50}},
-{id:"tm",cat:"acai",name:"Trufado Morango",desc:"Creme de açaí, creme de morango, bis, chocolate, Nutella, leite em pó e leite condensado.",img:"trufado-morango-2.jpg",sizes:{500:30,700:41,1000:50}},
-{id:"amor",cat:"acai",name:"Amor de Verão",desc:"Creme de açaí, leite em pó, leite condensado, morango e confete.",img:"amor-verao.jpg",sizes:{500:25,700:31,1000:40}},
-{id:"vitamina",cat:"acai",name:"Vitamina de Açaí",desc:"Vitamina cremosa de açaí.",img:"tradicional.jpg",sizes:{500:18,700:22}},
-{id:"choco",cat:"copos",name:"Açaí Chocopower",desc:"Creme de açaí, Nutella, leite e cobertura de chocolate.",img:"chocopower.jpg",sizes:{500:29}},
-{id:"tnmc",cat:"copos",name:"Trufado Ninho com Morango",desc:"Creme de Ninho, creme de açaí e morango.",img:"trufado-ninho-3.jpg",sizes:{500:30}},
-{id:"tnc",cat:"copos",name:"Açaí Trufado de Ninho",desc:"Creme de Ninho e creme de açaí.",img:"trufado-ninho-3.jpg",sizes:{500:30}},
-{id:"tmc",cat:"copos",name:"Trufado de Morango",desc:"Creme de açaí e creme de morango.",img:"trufado-morango-2.jpg",sizes:{500:30}},
-{id:"amorc",cat:"copos",name:"Amor de Verão",desc:"Creme de açaí, morango e confete.",img:"amor-verao-2.jpg",sizes:{500:23}},
-{id:"tmarc",cat:"copos",name:"Trufado de Maracujá",desc:"Creme de açaí, Nutella e creme de maracujá.",img:"trufado-maracuja.jpg",sizes:{500:30}},
-{id:"ovo",cat:"copos",name:"Açaí de Ovomaltine",desc:"Creme de açaí, Nutella, leite em pó, leite condensado, Ovomaltine e flocos crocantes.",img:"ovomaltine.jpg",sizes:{500:30,700:38,1000:46}},
-{id:"chup-coco",cat:"chupchup",name:"Chup Chup Gourmet — Coco",desc:"Chup Chup Gourmet sabor coco.",img:"tradicional.jpg",sizes:{1:7}},
-{id:"chup-amendoim",cat:"chupchup",name:"Chup Chup Gourmet — Amendoim",desc:"Chup Chup Gourmet sabor amendoim.",img:"acai-mineiro.jpg",sizes:{1:7}},
-{id:"chup-morango",cat:"chupchup",name:"Chup Chup Gourmet — Morango",desc:"Chup Chup Gourmet sabor morango.",img:"tradicional-morango.jpg",sizes:{1:7}},
-{id:"chup-ninho-nutella",cat:"chupchup",name:"Chup Chup Gourmet — Ninho com Nutella",desc:"Chup Chup Gourmet de Ninho com Nutella.",img:"trufado-ninho-2.jpg",sizes:{1:9}},
-{id:"chup-ninho-morango",cat:"chupchup",name:"Chup Chup Gourmet — Ninho com Morango",desc:"Chup Chup Gourmet de Ninho com morango.",img:"trufado-ninho-morango.jpg",sizes:{1:9}},
-{id:"chup-oreo",cat:"chupchup",name:"Chup Chup Gourmet — Oreo",desc:"Chup Chup Gourmet sabor Oreo.",img:"chocopower.jpg",sizes:{1:9}},
-{id:"chup-doce-leite",cat:"chupchup",name:"Chup Chup Gourmet — Doce de Leite",desc:"Chup Chup Gourmet sabor doce de leite.",img:"tradicional.jpg",sizes:{1:9}},
-{id:"chup-bis",cat:"chupchup",name:"Chup Chup Gourmet — Bis",desc:"Chup Chup Gourmet sabor Bis.",img:"trufado-ninho-2.jpg",sizes:{1:9}},
-{id:"chup-maracuja-chocolate",cat:"chupchup",name:"Chup Chup Gourmet — Maracujá com Chocolate",desc:"Chup Chup Gourmet de maracujá com chocolate.",img:"trufado-maracuja.jpg",sizes:{1:9}},
-{id:"chup-prestigio",cat:"chupchup",name:"Chup Chup Gourmet — Prestígio",desc:"Chup Chup Gourmet sabor Prestígio.",img:"trufado-morango-2.jpg",sizes:{1:9}}
+{id:"tradicional",cat:"acai",name:"Tradicional",desc:"Creme de açaí, banana, granola, leite em pó e leite condensado.",img:"tradicional.jpg",sizes:{500:23,700:29,1000:37}},
+{id:"mineiro",cat:"acai",name:"Mineiro",desc:"Creme de açaí, paçoca, leite em pó e leite condensado.",img:"acai-mineiro.jpg",sizes:{500:24,700:30,1000:39}},
+{id:"sensacao",cat:"acai",name:"Sensação",desc:"Creme de açaí, creme de Nutella, canudinho, bombom, leite em pó, leite condensado e gotas de chocolate.",img:"sensacao.jpg",sizes:{500:28,700:34,1000:43}},
+{id:"xmorango",cat:"acai",name:"Xmorango",desc:"Creme de açaí, morango, creme de Nutella, leite condensado e leite em pó.",img:"xmorango.jpg",sizes:{500:28,700:35,1000:44}},
+{id:"mix",cat:"acai",name:"Mix de frutas",desc:"Creme de açaí, leite em pó, banana, kiwi, morango, manga e leite condensado.",img:"mix-frutas.jpg",sizes:{500:28,700:35,1000:44}},
+{id:"tradmorango",cat:"acai",name:"Tradicional Morango",desc:"Creme de açaí, banana, morango, granola, leite em pó e leite condensado.",img:"tradicional-morango.jpg",sizes:{500:26,700:32,1000:42}},
+{id:"tnm",cat:"acai",name:"Trufado Ninho & morango",desc:"Creme de açaí, creme de leite, Ninho, bis, gotas de chocolate, creme de Nutella, leite em pó e leite condensado.",img:"trufado-ninho-morango.jpg",sizes:{500:30,700:42,1000:52}},
+{id:"tmar",cat:"acai",name:"Trufado Maracujá",desc:"Creme de açaí, bis, gotas de chocolate, creme de maracujá, creme de Nutella, leite em pó e leite condensado.",img:"trufado-maracuja.jpg",sizes:{500:30,700:42,1000:52}},
+{id:"tn",cat:"acai",name:"Trufado Ninho",desc:"Creme de açaí, creme de leite, Ninho, bis, gotas de chocolate, creme de Nutella, leite em pó e leite condensado.",img:"trufado-ninho-2.jpg",sizes:{500:30,700:41,1000:50}},
+{id:"tm",cat:"acai",name:"Trufado Morango",desc:"Creme de açaí, creme de morango, bis, gotas de chocolate, creme de Nutella, leite em pó e leite condensado.",img:"trufado-morango-2.jpg",sizes:{500:30,700:41,1000:50}},
+{id:"bala-kids",cat:"acai",name:"Bala de Goma Kids",desc:"Creme de açaí, leite em pó, leite condensado, bala de goma e Nutella.",img:"amor-verao.jpg",sizes:{500:25,700:32,1000:40}},
+{id:"confete-kids",cat:"acai",name:"Confete Kids",desc:"Creme de açaí, leite em pó, leite condensado, morango e confete.",img:"amor-verao.jpg",sizes:{500:25,700:32,1000:40}},
+{id:"vitamina",cat:"acai",name:"Vitamina de Açaí",desc:"Vitamina cremosa de açaí.",img:"tradicional.jpg",sizes:{500:18,700:22}}
 ];
 // Catálogo editável pelo Painel ADM. As alterações ficam salvas no navegador e
 // substituem o catálogo padrão quando o site é recarregado.
