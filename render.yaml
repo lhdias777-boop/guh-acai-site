@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: guh-acai-site
+    runtime: node
+    plan: free
+    region: ohio
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false
