@@ -82,3 +82,19 @@ footer{background:#21002f;color:#fff;padding:55px 22px 20px;margin-top:30px}.foo
 .promo-dots{position:absolute;z-index:3;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:6px}
 .promo-dot{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.55);cursor:pointer}.promo-dot.active{background:#fff;width:22px;border-radius:10px}
 @media(max-width:700px){.promo-carousel{margin:18px 0 16px;border-radius:18px}.promo-track{aspect-ratio:16/8;min-height:120px}.promo-arrow{width:34px;height:34px;font-size:26px}.promo-arrow.prev{left:8px}.promo-arrow.next{right:8px}}
+
+
+/* Correção do botão do Monte seu açaí no celular */
+@media(max-width:850px){
+  #builderModal .modal-box{display:flex;flex-direction:column;height:calc(100dvh - 28px);max-height:calc(100dvh - 28px);}
+  #builderModal .builder-visual{flex:0 0 150px;min-height:150px;height:150px;}
+  #builderModal .builder-visual span{font-size:62px;}
+  #builderModal .modal-content{flex:1;min-height:0;overflow-y:auto;padding:20px 18px 92px;}
+  #builderModal .add-main{position:sticky;bottom:0;z-index:30;width:100%;margin-top:12px;box-shadow:0 -10px 22px rgba(255,255,255,.98),0 8px 22px rgba(40,10,60,.18);}
+}
+@media(max-width:480px){
+  #builderModal .builder-visual{flex-basis:135px;min-height:135px;height:135px;}
+  #builderModal .builder-visual span{font-size:54px;}
+  #builderModal .builder-visual b{font-size:20px;}
+  #builderModal .modal-content{padding:18px 16px 88px;}
+}
