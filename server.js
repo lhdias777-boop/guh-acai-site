@@ -38,7 +38,7 @@ function normalizeMenuCatalog(products){
     const existing=byId.get(id);
     if(existing){
       existing.name=spec.name;
-      existing.sizes={...spec.sizes};
+      existing.sizes={...spec.sizes,...(existing.sizes||{})};
     } else {
       list.push({id,cat:"acai",name:spec.name,desc:"",img:images[id],sizes:{...spec.sizes}});
     }
