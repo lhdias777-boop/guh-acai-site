@@ -1,0 +1,115 @@
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
+
+const PORT = Number(process.env.PORT || 3000);
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "scdesign";
+const ROOT = __dirname;
+const DATA_DIR = path.join(ROOT, "data");
+const UPLOADS_DIR = path.join(ROOT, "uploads");
+const STATE_FILE = path.join(DATA_DIR, "state.json");
+
+fs.mkdirSync(DATA_DIR, {recursive:true});
+fs.mkdirSync(UPLOADS_DIR, {recursive:true});
+
+const MIME = {
+  ".html":"text/html; charset=utf-8",
+  ".js":"application/javascript; charset=utf-8",
+  ".css":"text/css; charset=utf-8",
+  ".json":"application/json; charset=utf-8",
+  ".png":"image/png",
+  ".jpg":"image/jpeg",
+  ".jpeg":"image/jpeg",
+  ".webp":"image/webp",
+  ".gif":"image/gif",
+  ".svg":"image/svg+xml",
+  ".ico":"image/x-icon"
+};
+
+function readState(){
+  try { return JSON.parse(fs.readFileSync(STATE_FILE,"utf8")); }
+  catch { return {}; }
+}
+function writeState(state){
+  state.updatedAt = new Date().toISOString();
+  const tmp = STATE_FILE + ".tmp";
+  fs.writeFileSync(tmp, JSON.stringify(state,null,2), "utf8");
+  fs.renameSync(tmp, STATE_FILE);
+  return state;
+}
+function saveDataUrl(value){
+  if(typeof value !== "string" || !value.startsWith("data:image/")) return value;
+  const m = value.match(/^data:image\/([a-zA-Z0-9.+-]+);base64,(.+)$/s);
+  if(!m) return value;
+  const extMap = {jpeg:"jpg",jpg:"jpg",png:"png",webp:"webp",gif:"gif"};
+  const ext = extMap[m[1].toLowerCase()] || "png";
+  const filename = `image-${Date.now()}-${crypto.randomBytes(5).toString("hex")}.${ext}`;
+  fs.writeFileSync(path.join(UPLOADS_DIR,filename), Buffer.from(m[2],"base64"));
+  return `/uploads/${filename}`;
+}
+function processState(input){
+  const state = {
+    settings: {...(input.settings || {})},
+    products: Array.isArray(input.products) ? input.products.map(p=>({...p})) : [],
+    addons: Array.isArray(input.addons) ? input.addons : []
+  };
+  for(const key of ["logo","aboutImage","promoSlide1","promoSlide2","promoSlide3"]){
+    if(state.settings[key]) state.settings[key] = saveDataUrl(state.settings[key]);
+  }
+  state.products.forEach(p=>{ if(p && p.img) p.img = saveDataUrl(p.img); });
+  return writeState(state);
+}
+function send(res,status,body,type="application/json"){
+  res.writeHead(status,{"Content-Type":type,"Cache-Control":"no-store"});
+  res.end(type.startsWith("application/json") ? JSON.stringify(body) : body);
+}
+function safePath(urlPath){
+  const decoded = decodeURIComponent(urlPath.split("?")[0]);
+  const full = path.normalize(path.join(ROOT, decoded));
+  if(!full.startsWith(ROOT)) return null;
+  return full;
+}
+function serveStatic(req,res){
+  let pathname = decodeURIComponent(req.url.split("?")[0]);
+  if(pathname === "/") pathname="/index.html";
+  const file = safePath(pathname);
+  if(!file) return send(res,403,{error:"Forbidden"});
+  fs.stat(file,(err,st)=>{
+    if(err || !st.isFile()) return send(res,404,{error:"Not found"});
+    const ext=path.extname(file).toLowerCase();
+    res.writeHead(200,{"Content-Type":MIME[ext]||"application/octet-stream","Cache-Control":ext===".html"?"no-store":"public, max-age=31536000"});
+    fs.createReadStream(file).pipe(res);
+  });
+}
+function readBody(req){
+  return new Promise((resolve,reject)=>{
+    let data="", size=0;
+    req.on("data",chunk=>{
+      size+=chunk.length;
+      if(size>60*1024*1024){reject(new Error("Payload too large"));req.destroy();return;}
+      data+=chunk;
+    });
+    req.on("end",()=>resolve(data));
+    req.on("error",reject);
+  });
+}
+
+const server=http.createServer(async (req,res)=>{
+  try{
+    if(req.method==="GET" && req.url.split("?")[0]==="/api/state"){
+      return send(res,200,readState());
+    }
+    if(req.method==="POST" && req.url.split("?")[0]==="/api/state"){
+      if(req.headers["x-admin-password"] !== ADMIN_PASSWORD) return send(res,401,{error:"Unauthorized"});
+      const raw=await readBody(req);
+      const input=JSON.parse(raw||"{}");
+      return send(res,200,processState(input));
+    }
+    serveStatic(req,res);
+  }catch(e){
+    console.error(e);
+    send(res,500,{error:e.message||"Server error"});
+  }
+});
+server.listen(PORT,()=>console.log(`Guh Açaí rodando em http://localhost:${PORT}`));
