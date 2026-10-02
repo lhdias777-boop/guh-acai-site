@@ -9,6 +9,43 @@ const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, "data");
 const UPLOADS_DIR = path.join(ROOT, "uploads");
 const STATE_FILE = path.join(DATA_DIR, "state.json");
+const MENU_ACAI = {
+  "tradicional": {name:"Tradicional", sizes:{500:23,700:29,1000:37}},
+  "mineiro": {name:"Mineiro", sizes:{500:24,700:30,1000:39}},
+  "sensacao": {name:"Sensação", sizes:{500:28,700:34,1000:43}},
+  "xmorango": {name:"Xmorango", sizes:{500:28,700:35,1000:44}},
+  "mix": {name:"Mix de frutas", sizes:{500:28,700:35,1000:44}},
+  "tradmorango": {name:"Tradicional Morango", sizes:{500:26,700:32,1000:42}},
+  "tnm": {name:"Trufado Ninho & morango", sizes:{500:30,700:42,1000:52}},
+  "tmar": {name:"Trufado Maracujá", sizes:{500:30,700:42,1000:52}},
+  "tn": {name:"Trufado Ninho", sizes:{500:30,700:41,1000:50}},
+  "tm": {name:"Trufado Morango", sizes:{500:30,700:41,1000:50}},
+  "bala-kids": {name:"Bala de Goma Kids", sizes:{500:25,700:32,1000:40}},
+  "confete-kids": {name:"Confete Kids", sizes:{500:25,700:32,1000:40}},
+  "vitamina": {name:"Vitamina de Açaí", sizes:{500:18,700:22}}
+};
+function normalizeMenuCatalog(products){
+  const list = Array.isArray(products) ? products.map(p=>({...p})) : [];
+  const byId = new Map(list.map(p=>[p.id,p]));
+  const images = {
+    tradicional:"tradicional.jpg", mineiro:"acai-mineiro.jpg", sensacao:"sensacao.jpg",
+    xmorango:"xmorango.jpg", mix:"mix-frutas.jpg", tradmorango:"tradicional-morango.jpg",
+    tnm:"trufado-ninho-morango.jpg", tmar:"trufado-maracuja.jpg", tn:"trufado-ninho-2.jpg",
+    tm:"trufado-morango-2.jpg", "bala-kids":"amor-verao.jpg", "confete-kids":"amor-verao.jpg",
+    vitamina:"tradicional.jpg"
+  };
+  for(const [id,spec] of Object.entries(MENU_ACAI)){
+    const existing=byId.get(id);
+    if(existing){
+      existing.name=spec.name;
+      existing.sizes={...spec.sizes};
+    } else {
+      list.push({id,cat:"acai",name:spec.name,desc:"",img:images[id],sizes:{...spec.sizes}});
+    }
+  }
+  return list;
+}
+
 
 fs.mkdirSync(DATA_DIR, {recursive:true});
 fs.mkdirSync(UPLOADS_DIR, {recursive:true});
@@ -63,7 +100,7 @@ function saveDataUrl(value){
 function processState(input){
   const state = {
     settings: {...(input.settings || {})},
-    products: Array.isArray(input.products) ? input.products.map(p=>({...p})) : [],
+    products: normalizeMenuCatalog(input.products),
     addons: Array.isArray(input.addons) ? input.addons : []
   };
   for(const key of ["logo","aboutImage","promoSlide1","promoSlide2","promoSlide3"]){
