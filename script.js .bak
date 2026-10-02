@@ -1,0 +1,93 @@
+const WHATSAPP_NUMBER = "5531988405083";
+let products=[
+{id:"tradicional",cat:"acai",name:"Tradicional",desc:"Creme de açaí, banana, granola, leite em pó e leite condensado.",img:"assets/tradicional.jpg",sizes:{500:22,700:28,1000:37}},
+{id:"mineiro",cat:"acai",name:"Mineiro",desc:"Creme de açaí, paçoca, leite em pó e leite condensado.",img:"assets/acai-mineiro.jpg",sizes:{500:23,700:29,1000:38}},
+{id:"sensacao",cat:"acai",name:"Sensação",desc:"Creme de açaí, Nutella, canudinho, bombom, leite em pó, leite condensado e gotas de chocolate.",img:"assets/sensacao.jpg",sizes:{500:26,700:32,1000:40}},
+{id:"xmorango",cat:"acai",name:"Xmorango",desc:"Creme de açaí, morango, creme de Nutella e leite condensado.",img:"assets/xmorango.jpg",sizes:{500:27,700:33,1000:42}},
+{id:"mix",cat:"acai",name:"Mix de frutas",desc:"Creme de açaí, leite em pó, banana, kiwi, morango, manga e leite condensado.",img:"assets/mix-frutas.jpg",sizes:{500:26,700:33,1000:42}},
+{id:"tradmorango",cat:"acai",name:"Tradicional Morango",desc:"Creme de açaí, banana, morango, granola, leite em pó e leite condensado.",img:"assets/tradicional-morango.jpg",sizes:{500:24,700:30,1000:40}},
+{id:"tnm",cat:"acai",name:"Trufado Ninho & Morango",desc:"Creme de açaí, Ninho, bis, gotas de chocolate, Nutella, leite em pó e leite condensado.",img:"assets/trufado-ninho-morango.jpg",sizes:{500:28,700:35,1000:45}},
+{id:"tmar",cat:"acai",name:"Trufado Maracujá",desc:"Creme de açaí, bis, chocolate, creme de maracujá, Nutella, leite em pó e leite condensado.",img:"assets/trufado-maracuja.jpg",sizes:{500:30,700:41,1000:50}},
+{id:"tn",cat:"acai",name:"Trufado Ninho",desc:"Creme de açaí, Ninho, bis, chocolate, Nutella, leite em pó e leite condensado.",img:"assets/trufado-ninho-2.jpg",sizes:{500:30,700:41,1000:50}},
+{id:"tm",cat:"acai",name:"Trufado Morango",desc:"Creme de açaí, creme de morango, bis, chocolate, Nutella, leite em pó e leite condensado.",img:"assets/trufado-morango-2.jpg",sizes:{500:30,700:41,1000:50}},
+{id:"amor",cat:"acai",name:"Amor de Verão",desc:"Creme de açaí, leite em pó, leite condensado, morango e confete.",img:"assets/amor-verao.jpg",sizes:{500:25,700:31,1000:40}},
+{id:"vitamina",cat:"acai",name:"Vitamina de Açaí",desc:"Vitamina cremosa de açaí.",img:"assets/tradicional.jpg",sizes:{500:18,700:22}},
+{id:"choco",cat:"copos",name:"Açaí Chocopower",desc:"Creme de açaí, Nutella, leite e cobertura de chocolate.",img:"assets/chocopower.jpg",sizes:{500:29}},
+{id:"tnmc",cat:"copos",name:"Trufado Ninho com Morango",desc:"Creme de Ninho, creme de açaí e morango.",img:"assets/trufado-ninho-3.jpg",sizes:{500:30}},
+{id:"tnc",cat:"copos",name:"Açaí Trufado de Ninho",desc:"Creme de Ninho e creme de açaí.",img:"assets/trufado-ninho-3.jpg",sizes:{500:30}},
+{id:"tmc",cat:"copos",name:"Trufado de Morango",desc:"Creme de açaí e creme de morango.",img:"assets/trufado-morango-2.jpg",sizes:{500:30}},
+{id:"amorc",cat:"copos",name:"Amor de Verão",desc:"Creme de açaí, morango e confete.",img:"assets/amor-verao-2.jpg",sizes:{500:23}},
+{id:"tmarc",cat:"copos",name:"Trufado de Maracujá",desc:"Creme de açaí, Nutella e creme de maracujá.",img:"assets/trufado-maracuja.jpg",sizes:{500:30}},
+{id:"ovo",cat:"copos",name:"Açaí de Ovomaltine",desc:"Creme de açaí, Nutella, leite em pó, leite condensado, Ovomaltine e flocos crocantes.",img:"assets/ovomaltine.jpg",sizes:{500:30,700:38,1000:46}},
+{id:"chup-coco",cat:"chupchup",name:"Chup Chup Gourmet — Coco",desc:"Chup Chup Gourmet sabor coco.",img:"assets/tradicional.jpg",sizes:{1:7}},
+{id:"chup-amendoim",cat:"chupchup",name:"Chup Chup Gourmet — Amendoim",desc:"Chup Chup Gourmet sabor amendoim.",img:"assets/acai-mineiro.jpg",sizes:{1:7}},
+{id:"chup-morango",cat:"chupchup",name:"Chup Chup Gourmet — Morango",desc:"Chup Chup Gourmet sabor morango.",img:"assets/tradicional-morango.jpg",sizes:{1:7}},
+{id:"chup-ninho-nutella",cat:"chupchup",name:"Chup Chup Gourmet — Ninho com Nutella",desc:"Chup Chup Gourmet de Ninho com Nutella.",img:"assets/trufado-ninho-2.jpg",sizes:{1:9}},
+{id:"chup-ninho-morango",cat:"chupchup",name:"Chup Chup Gourmet — Ninho com Morango",desc:"Chup Chup Gourmet de Ninho com morango.",img:"assets/trufado-ninho-morango.jpg",sizes:{1:9}},
+{id:"chup-oreo",cat:"chupchup",name:"Chup Chup Gourmet — Oreo",desc:"Chup Chup Gourmet sabor Oreo.",img:"assets/chocopower.jpg",sizes:{1:9}},
+{id:"chup-doce-leite",cat:"chupchup",name:"Chup Chup Gourmet — Doce de Leite",desc:"Chup Chup Gourmet sabor doce de leite.",img:"assets/tradicional.jpg",sizes:{1:9}},
+{id:"chup-bis",cat:"chupchup",name:"Chup Chup Gourmet — Bis",desc:"Chup Chup Gourmet sabor Bis.",img:"assets/trufado-ninho-2.jpg",sizes:{1:9}},
+{id:"chup-maracuja-chocolate",cat:"chupchup",name:"Chup Chup Gourmet — Maracujá com Chocolate",desc:"Chup Chup Gourmet de maracujá com chocolate.",img:"assets/trufado-maracuja.jpg",sizes:{1:9}},
+{id:"chup-prestigio",cat:"chupchup",name:"Chup Chup Gourmet — Prestígio",desc:"Chup Chup Gourmet sabor Prestígio.",img:"assets/trufado-morango-2.jpg",sizes:{1:9}}
+];
+// Catálogo editável pelo Painel ADM. As alterações ficam salvas no navegador e
+// substituem o catálogo padrão quando o site é recarregado.
+try {
+  const savedCatalog = localStorage.getItem("guhAcaiCatalogV1");
+  if (savedCatalog) {
+    const parsed = JSON.parse(savedCatalog);
+    if (Array.isArray(parsed.products) && parsed.products.length) products = parsed.products;
+  }
+} catch (e) { console.warn("Não foi possível carregar o catálogo salvo.", e); }
+
+
+const addons=[["Banana",3],["Manga",4],["Morango",5],["Granola",2],["Leite condensado",5],["Leite em pó",3.5],["Nutella",7]];
+let cart=[],current=null,currentSize=null,builderSize=500,builderAddons=[],currentAddons=[],payment="Pix";
+const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+function promoPrice(p,size){
+  const normal=Number(p.sizes?.[size]||0);
+  const promo=Number(p.promos?.[size]||0);
+  return promo>0 && promo<normal ? promo : normal;
+}
+function priceHtml(p,size,extraClass=""){
+  const normal=Number(p.sizes?.[size]||0), promo=promoPrice(p,size);
+  return promo<normal ? `<span class="price-promo ${extraClass}"><del>${money(normal)}</del> <strong>${money(promo)}</strong></span>` : `<span class="price ${extraClass}">${money(normal)}</span>`;
+}
+function renderProducts(target="productGrid",filter="todos"){
+ const q=(document.getElementById("search")?.value||"").toLowerCase();
+ const list=products.filter(p=>(filter==="todos"||p.cat===filter)&&(p.name+" "+p.desc).toLowerCase().includes(q));
+ document.getElementById(target).innerHTML=list.map(p=>{const first=Object.entries(p.sizes)[0];const normal=Number(first[1]);const promo=promoPrice(p,first[0]);const price=promo<normal?`a partir de <del>${money(normal)}</del> <strong>${money(promo)}</strong>`:`a partir de ${money(normal)}`;return `<article class="product-card"><div class="product-photo">${promo<normal?`<span class="promo-badge">PROMO</span>`:""}<img src="${p.img}" alt="${p.name}" loading="lazy"></div><div class="product-info"><span class="pill">${p.cat==="acai"?"Açaí":p.cat==="copos"?"Copo montado":"Chup Chup Gourmet"}</span><h3>${p.name}</h3><p>${p.desc}</p><div class="product-bottom"><span class="price">${price}</span><button class="add" onclick="openProduct('${p.id}')">+ Adicionar</button></div></div></article>`}).join("");
+}
+function setFilter(filter){document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));renderProducts("productGrid",filter);document.getElementById("cardapio").scrollIntoView({behavior:"smooth"})}
+function renderFeatured(){const list=products.filter(p=>p.cat==="copos").slice(0,6);document.getElementById("featuredGrid").innerHTML=list.map(p=>{const size=Object.keys(p.sizes)[0],normal=Number(p.sizes[size]),promo=promoPrice(p,size);return `<article class="product-card"><div class="product-photo">${promo<normal?`<span class="promo-badge">PROMO</span>`:""}<img src="${p.img}" alt="${p.name}" loading="lazy"></div><div class="product-info"><span class="pill">Copo montado</span><h3>${p.name}</h3><p>${p.desc}</p><div class="product-bottom">${priceHtml(p,size)}<button class="add" onclick="openProduct('${p.id}')">+ Adicionar</button></div></div></article>`}).join("")}
+function renderChupChup(){const list=products.filter(p=>p.cat==="chupchup");document.getElementById("chupGrid").innerHTML=list.map(p=>{const size=Object.keys(p.sizes)[0],normal=Number(p.sizes[size]),promo=promoPrice(p,size);return `<article class="product-card"><div class="product-photo">${promo<normal?`<span class="promo-badge">PROMO</span>`:""}<img src="${p.img}" alt="${p.name}" loading="lazy"></div><div class="product-info"><span class="pill">Chup Chup Gourmet</span><h3>${p.name.replace("Chup Chup Gourmet — ","")}</h3><p>${p.desc}</p><div class="product-bottom">${priceHtml(p,size)}<button class="add" onclick="openProduct('${p.id}')">+ Adicionar</button></div></div></article>`}).join("")}
+function renderAddons(){document.getElementById("addonGrid").innerHTML=addons.map(a=>`<div class="addon"><span>${a[0]}</span><span>+ ${money(a[1])}</span></div>`).join("")}
+function openProduct(id){current=products.find(p=>p.id===id);currentSize=Number(Object.keys(current.sizes)[0]);currentAddons=[];document.getElementById("modalImg").src=current.img;document.getElementById("modalTitle").textContent=current.name;document.getElementById("modalDesc").textContent=current.desc;document.getElementById("modalCategory").textContent=current.cat==="acai"?"Açaí":current.cat==="copos"?"Copo montado":"Chup Chup Gourmet";document.getElementById("sizeOptions").innerHTML=Object.entries(current.sizes).map(([s,p])=>{const promo=promoPrice(current,s);return `<button class="size ${+s===currentSize?"active":""}" onclick="selectSize(${s},this)">${s==1000?"1 litro":s==1?"unidade":s+"ml"} <b>${promo<Number(p)?`<del>${money(p)}</del> ${money(promo)}`:money(p)}</b></button>`}).join("");renderProductAddons();updateModal();showModal("productModal")}
+function selectSize(s,el){currentSize=+s;document.querySelectorAll("#sizeOptions .size").forEach(x=>x.classList.remove("active"));el.classList.add("active");updateModal()}
+function renderProductAddons(){const box=document.getElementById("productAddonArea");if(!box)return;if(current.cat==="chupchup"){box.innerHTML="";return}box.innerHTML=`<label class="label">Acréscimos</label><p class="addon-help">Escolha os adicionais para colocar junto com seu açaí.</p><div class="product-addons">${addons.map((a,i)=>`<button type="button" class="product-addon ${currentAddons.includes(i)?"active":""}" onclick="toggleProductAddon(${i},this)"><span>${a[0]}</span><b>+${money(a[1])}</b></button>`).join("")}</div>`}function toggleProductAddon(i,el){if(currentAddons.includes(i))currentAddons=currentAddons.filter(x=>x!==i);else currentAddons.push(i);el.classList.toggle("active");updateModal()}function updateModal(){const normal=Number(current.sizes[currentSize]),promo=promoPrice(current,currentSize),extras=currentAddons.reduce((sum,i)=>sum+Number(addons[i][1]),0),base=promo+extras,normalHtml=promo<normal?`<del>${money(normal)}</del> ${money(promo)}`:money(normal);document.getElementById("modalPrice").innerHTML=extras?`<span>${normalHtml} <small>+ ${money(extras)} adicionais</small></span><strong>${money(base)}</strong>`:normalHtml}
+function showModal(id){document.getElementById(id).classList.add("show");document.getElementById("overlay").classList.add("show")}
+function hideModal(id){document.getElementById(id).classList.remove("show");if(!document.querySelector(".modal.show"))document.getElementById("overlay").classList.remove("show")}
+function closeModal(){hideModal("productModal")}function closeBuilder(){hideModal("builderModal")}function closeCheckout(){hideModal("checkoutModal")}
+function addCurrent(){const base=promoPrice(current,currentSize),extras=currentAddons.reduce((sum,i)=>sum+Number(addons[i][1]),0),extraNames=currentAddons.map(i=>addons[i][0]).join(", ");cart.push({name:current.name,size:currentSize,price:base+extras,normalPrice:Number(current.sizes[currentSize]),img:current.img,extra:extraNames});closeModal();renderCart();openCart()}
+function openCart(){document.getElementById("cartDrawer").classList.add("open");document.getElementById("overlay").classList.add("show")}
+function closeCart(){document.getElementById("cartDrawer").classList.remove("open");if(!document.querySelector(".modal.show"))document.getElementById("overlay").classList.remove("show")}
+function renderCart(){document.getElementById("cartCount").textContent=cart.length;const total=cart.reduce((s,i)=>s+i.price,0);document.getElementById("cartTotal").textContent=money(total);document.getElementById("cartItems").innerHTML=cart.length?cart.map((i,n)=>`<div class="cart-row"><img src="${i.img}" alt=""><div><h4>${i.name}</h4><small>${i.size==1000?"1 litro":i.size==1?"unidade":i.size+"ml"} • ${i.normalPrice&&i.price<i.normalPrice?`<del>${money(i.normalPrice)}</del> ${money(i.price)}`:money(i.price)}</small></div><button onclick="removeItem(${n})">×</button></div>`).join(""):`<div class="empty">🛍️<br><b>Sua sacola está vazia.</b><br>Escolha um açaí para começar.</div>`}
+function removeItem(n){cart.splice(n,1);renderCart()}
+function openBuilder(){builderSize=500;builderAddons=[];renderBuilder();showModal("builderModal")}
+function renderBuilder(){document.querySelectorAll(".builder-sizes button").forEach(b=>b.classList.toggle("active",+b.dataset.size===builderSize));document.getElementById("builderAddons").innerHTML=addons.map((a,i)=>`<button class="builder-addon ${builderAddons.includes(i)?"active":""}" onclick="toggleBuilderAddon(${i},this)"><span>${a[0]}</span><b>+${money(a[1])}</b></button>`).join("");document.getElementById("builderTotal").textContent=money(builderPrice())}
+function builderPrice(){return ({500:22,700:28,1000:37})[builderSize]+builderAddons.reduce((s,i)=>s+addons[i][1],0)}
+function toggleBuilderAddon(i,el){builderAddons=builderAddons.includes(i)?builderAddons.filter(x=>x!==i):[...builderAddons,i];el.classList.toggle("active");document.getElementById("builderTotal").textContent=money(builderPrice())}
+function addBuilder(){const names=builderAddons.map(i=>addons[i][0]).join(", ");cart.push({name:"Açaí personalizado",size:builderSize,price:builderPrice(),img:"assets/tradicional.jpg",extra:names});closeBuilder();renderCart();openCart()}
+function openCheckout(){if(!cart.length)return alert("Adicione pelo menos um item à sacola.");closeCart();renderCheckout();showModal("checkoutModal")}
+function renderCheckout(){document.getElementById("checkoutItems").innerHTML=cart.map(i=>`<div class="summary-row"><span>${i.name} • ${i.size==1000?"1L":i.size==1?"unidade":i.size+"ml"}</span><b>${i.normalPrice&&i.price<i.normalPrice?`<del>${money(i.normalPrice)}</del> ${money(i.price)}`:money(i.price)}</b></div>`).join("");document.getElementById("checkoutTotal").textContent=money(cart.reduce((s,i)=>s+i.price,0))}
+function sendOrder(){const name=document.getElementById("customerName").value.trim(),phone=document.getElementById("customerPhone").value.trim(),address=document.getElementById("customerAddress").value.trim();if(!name||!phone||!address)return alert("Preencha nome, WhatsApp e endereço.");const total=cart.reduce((s,i)=>s+i.price,0);const items=cart.map(i=>`• ${i.name} — ${i.size==1000?"1 litro":i.size==1?"unidade":i.size+"ml"} — ${money(i.price)}${i.extra?" ("+i.extra+")":""}`).join("\n");const msg=`Olá! Quero fazer um pedido na Guh Açaí 💜\n\n${items}\n\nTotal: ${money(total)}\n\nNome: ${name}\nWhatsApp: ${phone}\nEndereço: ${address}\nComplemento: ${document.getElementById("customerComplement").value||"Não informado"}\nPagamento: ${payment}`;if(!WHATSAPP_NUMBER)return alert("O checkout está pronto. Para enviar de verdade, configure o número da loja em WHATSAPP_NUMBER no arquivo script.js.");window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank")}
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>setFilter(b.dataset.filter));
+document.getElementById("search").oninput=()=>{const active=document.querySelector("#tabs button.active").dataset.filter;renderProducts("productGrid",active)};
+document.getElementById("openCart").onclick=openCart;document.getElementById("closeCart").onclick=closeCart;document.getElementById("goCheckout").onclick=openCheckout;document.getElementById("overlay").onclick=()=>{closeCart();document.querySelectorAll(".modal").forEach(m=>m.classList.remove("show"));document.getElementById("overlay").classList.remove("show")};
+document.querySelectorAll(".pay").forEach(b=>b.onclick=()=>{document.querySelectorAll(".pay").forEach(x=>x.classList.remove("active"));b.classList.add("active");payment=b.dataset.pay});
+document.querySelectorAll(".builder-sizes button").forEach(b=>b.onclick=()=>{builderSize=+b.dataset.size;renderBuilder()});
+renderProducts();renderFeatured();renderChupChup();renderAddons();renderCart();
+
+window.addEventListener("storage", (event) => {
+  if (event.key === "guhAcaiCatalogV1") window.location.reload();
+});
