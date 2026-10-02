@@ -13,6 +13,12 @@ const STATE_FILE = path.join(DATA_DIR, "state.json");
 fs.mkdirSync(DATA_DIR, {recursive:true});
 fs.mkdirSync(UPLOADS_DIR, {recursive:true});
 
+const geladinhoImage = "data:image/jpeg;base64," +
+  fs.readFileSync(path.join(ROOT,"geladinho-part1.txt"),"utf8") +
+  fs.readFileSync(path.join(ROOT,"geladinho-part2.txt"),"utf8") +
+  fs.readFileSync(path.join(ROOT,"geladinho-part3.txt"),"utf8") +
+  fs.readFileSync(path.join(ROOT,"geladinho-part4.txt"),"utf8");
+
 const MIME = {
   ".html":"text/html; charset=utf-8",
   ".js":"application/javascript; charset=utf-8",
@@ -28,7 +34,13 @@ const MIME = {
 };
 
 function readState(){
-  try { return JSON.parse(fs.readFileSync(STATE_FILE,"utf8")); }
+  try {
+    const state = JSON.parse(fs.readFileSync(STATE_FILE,"utf8"));
+    if(Array.isArray(state.products)){
+      state.products.forEach(p=>{ if(p && p.cat==="chupchup") p.img=geladinhoImage; });
+    }
+    return state;
+  }
   catch { return {}; }
 }
 function writeState(state){
@@ -57,7 +69,10 @@ function processState(input){
   for(const key of ["logo","aboutImage","promoSlide1","promoSlide2","promoSlide3"]){
     if(state.settings[key]) state.settings[key] = saveDataUrl(state.settings[key]);
   }
-  state.products.forEach(p=>{ if(p && p.img) p.img = saveDataUrl(p.img); });
+  state.products.forEach(p=>{
+    if(p && p.cat==="chupchup") p.img=geladinhoImage;
+    else if(p && p.img) p.img = saveDataUrl(p.img);
+  });
   return writeState(state);
 }
 function send(res,status,body,type="application/json"){
