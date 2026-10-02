@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6208b7">
+<meta name="description" content="Guh Açaí — cardápio digital, monte seu açaí e peça online.">
+<title>Guh Açaí • Cardápio Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar"><span>💜 <span id="topHandle">guuh_acai</span></span><span>•</span><span>🛵 <span id="topDelivery">Somente delivery</span></span></div>
+
+<button class="side-menu-trigger" id="sideMenuTrigger" aria-label="Abrir menu" title="Menu">⋮</button>
+<div class="side-menu-overlay" id="sideMenuOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-label="Menu principal">
+  <div class="side-menu-head"><div><span class="kicker">GUUH AÇAÍ</span><h3>Menu</h3></div><button id="closeSideMenu">×</button></div>
+  <nav class="side-menu-links">
+    <a href="#inicio">🏠 <span>Início</span></a>
+    <a href="#cardapio">🍇 <span>Cardápio</span></a>
+    <a href="#monte">🥣 <span>Monte seu açaí</span></a>
+    <a href="#chupchup">🍦 <span>Chup Chup Gourmet</span></a>
+    <a href="#adicionais">➕ <span>Acréscimos</span></a>
+    <a href="#sobre">💜 <span>Sobre nós</span></a>
+    <a href="#faq">❓ <span>Dúvidas</span></a>
+    <a href="#feedback" class="feedback-link">⭐ <span id="menuFeedbackLabel">Feedback</span></a>
+  </nav>
+  <div class="side-menu-bottom"><a data-whatsapp href="https://wa.me/5531988405083" target="_blank" rel="noopener">📲 Pedir pelo WhatsApp</a></div>
+</aside>
+
+<header class="hero" id="inicio">
+  <nav class="nav">
+    <a class="brand admin-logo" href="#inicio" id="adminLogo" title="Área administrativa"><img src="logo-guh-acai.jpg" alt="Guh Açaí"></a>
+    <div class="navlinks">
+      <a href="#cardapio" id="navCardapio">Cardápio</a><a href="#monte" id="navMonte">Monte seu açaí</a><a href="#sobre" id="navSobre">Sobre</a><a href="#faq" id="navFaq">Dúvidas</a>
+    </div>
+    <button class="cart-btn" id="openCart">🛍️ <span id="cartLabel">Minha sacola</span><b id="cartCount">0</b></button>
+  </nav>
+
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="eyebrow" id="heroEyebrow">✨ Guh Açaí • Cardápio digital</div>
+      <div class="delivery-badge" id="heroBadge">🛵 SOMENTE DELIVERY • Faça seu pedido pelo WhatsApp</div>
+      <h1><span id="heroTitle">O seu açaí</span><br><strong id="heroTitleStrong">do seu jeito.</strong></h1>
+      <div class="promo-carousel" id="promoCarousel" aria-label="Promoções">
+        <button class="promo-arrow prev" type="button" aria-label="Promoção anterior" onclick="promoMove(-1)">‹</button>
+        <div class="promo-track" id="promoTrack"></div>
+        <button class="promo-arrow next" type="button" aria-label="Próxima promoção" onclick="promoMove(1)">›</button>
+        <div class="promo-dots" id="promoDots"></div>
+      </div>
+      <p id="heroDescription">Escolha seu favorito, personalize com seus complementos e faça seu pedido em poucos passos.</p>
+      <div class="hero-actions">
+        <a class="primary" href="#cardapio"><span id="heroButton">Ver cardápio</span> <span>→</span></a>
+              </div>
+      
+    </div>
+
+  </div>
+</header>
+
+
+
+
+
+<main>
+<section class="section" id="cardapio">
+  <div class="section-title">
+    <div><span class="kicker" id="cardapioKicker">CARDÁPIO</span><h2 id="cardapioTitle">Escolha seu favorito</h2><p id="cardapioDesc">Os queridinhos da Guh Açaí em um só lugar.</p></div>
+    <div class="search"><span>⌕</span><input id="search" placeholder="Buscar açaí, morango, Ninho..." aria-label="Buscar produto"></div>
+  </div>
+  <div class="tabs" id="tabs"><button class="active" data-filter="todos" id="tabTodos">Todos</button><button data-filter="acai" id="tabAcai">Açaís</button><button data-filter="copos" id="tabCopos">Copos montados</button><button data-filter="chupchup" id="tabChup">Chup Chup Gourmet</button></div>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<section class="promo" id="monte">
+  <div class="promo-copy">
+    <span class="kicker light" id="monteKicker">MONTE DO SEU JEITO</span>
+    <h2 id="monteTitle">Crie o açaí que combina com você.</h2>
+    <p id="monteDesc">Comece pelo tamanho e escolha os adicionais para deixar seu copo exatamente como você gosta.</p>
+    <button class="primary light-button" onclick="openBuilder()"><span id="monteButton">Montar meu açaí</span> <span>→</span></button>
+  </div>
+  <div class="ingredients"><span>🍓</span><span>🍌</span><span>🥝</span><span>🥭</span><span>🍫</span><span>🥜</span></div>
+</section>
+
+<section class="section chup-section" id="chupchup">
+  <div class="section-title compact"><div><span class="kicker" id="chupKicker">CHUP CHUP GOURMET</span><h2 id="chupTitle">Geladinho, cremoso e irresistível 🍦</h2><p id="chupDesc">Escolha seu sabor favorito e adicione ao pedido.</p></div><button class="outline" id="verTodosChup" onclick="setFilter('chupchup')">Ver todos →</button></div>
+  <div class="product-grid" id="chupGrid"></div>
+</section>
+
+<section class="section" id="copos">
+  <div class="section-title compact"><div><span class="kicker" id="coposKicker">COPOS MONTADOS</span><h2 id="coposTitle">Já vem caprichado</h2></div><button class="outline" id="verTodosCopos" onclick="setFilter('copos')">Ver todos →</button></div>
+  <div class="product-grid" id="featuredGrid"></div>
+</section>
+
+<section class="section" id="adicionais">
+  <div class="section-title compact"><div><span class="kicker" id="adicionaisKicker">ACRÉSCIMOS</span><h2 id="adicionaisTitle">Deixe ainda melhor</h2><p id="adicionaisDesc">Adicione seus favoritos ao pedido.</p></div></div>
+  <div class="addons" id="addonGrid"></div>
+</section>
+
+<section class="info-band" id="entrega">
+  <div class="info-item"><div class="icon">🛵</div><div><b id="deliveryTitle">Delivery</b><p id="deliveryDesc">Consulte a área de entrega no atendimento.</p></div></div>
+  <div class="info-item"><div class="icon">💳</div><div><b id="paymentTitle">Pagamento</b><p id="paymentDesc">Pix, cartão e outras opções conforme disponibilidade.</p></div></div>
+  <div class="info-item"><div class="icon">⚡</div><div><b id="quickTitle">Pedido rápido</b><p id="quickDesc">Monte sua sacola e envie o pedido pelo WhatsApp.</p></div></div>
+</section>
+
+<section class="section about" id="sobre">
+  <div class="about-text"><span class="kicker" id="aboutKicker">SOBRE A GUH AÇAÍ</span><h2 id="aboutTitle">Mais sabor em cada colherada.</h2><p id="aboutText">Uma experiência simples para você escolher, personalizar e pedir seu açaí sem complicação.</p><div class="stats"><div><b id="stat1">100%</b><small id="stat1small">personalizável</small></div><div><b id="stat2">+ opções</b><small id="stat2small">para combinar</small></div><div><b id="stat3">Online</b><small id="stat3small">e fácil de pedir</small></div></div></div>
+</section>
+
+<section class="section faq" id="faq">
+  <div class="section-title compact"><div><span class="kicker" id="faqKicker">AJUDA</span><h2 id="faqTitle">Ficou com alguma dúvida?</h2></div></div>
+  <div class="faq-list">
+    <details><summary id="faq1Q">Como faço meu pedido?</summary><p id="faq1A">Escolha um produto, selecione o tamanho, adicione ao carrinho e finalize. O site pode enviar o resumo do pedido para o WhatsApp da loja.</p></details>
+    <details><summary id="faq2Q">Posso personalizar meu açaí?</summary><p id="faq2A">Sim. Use a opção “Monte seu açaí” para escolher o tamanho e os adicionais disponíveis.</p></details>
+    <details><summary id="faq3Q">Quais formas de pagamento estão disponíveis?</summary><p id="faq3A">O checkout está preparado para Pix, cartão e pagamento na entrega. A integração de pagamento online deve ser conectada ao gateway escolhido pela loja.</p></details>
+    <details><summary id="faq4Q">Como saber se entregam no meu endereço?</summary><p id="faq4A">Informe o endereço no checkout ou fale com o atendimento para confirmar a área e a taxa de entrega.</p></details>
+  </div>
+</section>
+</main>
+
+<section class="section feedback-section" id="feedback">
+  <div class="section-title compact">
+    <div><span class="kicker" id="feedbackKicker">FEEDBACK</span><h2 id="feedbackTitle">Conte pra gente o que achou 💜</h2><p id="feedbackDesc">Sua opinião ajuda a Guh Açaí a melhorar cada vez mais.</p></div>
+  </div>
+  <div class="feedback-layout">
+    <div class="feedback-form-card">
+      <h3 id="feedbackFormTitle">Deixe seu feedback</h3>
+      <label>Seu nome</label><input id="feedbackName" type="text" maxlength="60" placeholder="Como podemos te chamar?">
+      <label>Nota</label><div class="rating-input" id="ratingInput" aria-label="Escolha uma nota de 1 a 5">
+        <button type="button" data-rating="1">★</button><button type="button" data-rating="2">★</button><button type="button" data-rating="3">★</button><button type="button" data-rating="4">★</button><button type="button" data-rating="5">★</button>
+      </div>
+      <label>Mensagem</label><textarea id="feedbackMessage" maxlength="500" placeholder="Conte como foi sua experiência..."></textarea>
+      <button class="primary feedback-submit" id="sendFeedback" type="button">Enviar feedback →</button>
+      <small class="feedback-note">Seu feedback ficará salvo no histórico de avaliações deste navegador.</small>
+    </div>
+    <div class="feedback-list-card">
+      <div class="feedback-list-head"><h3>O que nossos clientes disseram</h3><span id="feedbackCount">0 avaliações</span></div>
+      <div id="feedbackList" class="feedback-list"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><img src="logo-guh-acai.jpg" alt="Guh Açaí" class="footer-logo"><p id="footerTagline">Seu açaí, do seu jeito. 💜</p></div>
+    <div><b id="footerMenu">Menu</b><a href="#cardapio">Cardápio</a><a href="#monte">Monte seu açaí</a><a href="#chupchup">Chup Chup Gourmet</a><a href="#adicionais">Adicionais</a></div>
+    <div><b id="footerAtendimento">Atendimento</b><span>🛵 <span id="footerDelivery">Somente delivery</span></span><a data-whatsapp href="https://wa.me/5531988405083" target="_blank" rel="noopener">📲 (31) 98840-5083</a><span>📍 <span id="footerRegion">Consulte a região de entrega</span></span></div>
+    <div><b id="footerSocial">Redes sociais</b><a data-instagram data-instagram-label="Instagram • @guuh_acai" href="https://instagram.com/guuh_acai" target="_blank" rel="noopener">Instagram • @guuh_acai</a></div>
+  </div>
+  <div class="copyright" id="footerCopyright">© 2026 Guh Açaí • guuh_acai • Somente delivery • WhatsApp</div>
+</footer>
+
+<div class="floating-socials" aria-label="Redes sociais">
+  <a class="floating-instagram" data-instagram href="https://instagram.com/guuh_acai" target="_blank" rel="noopener" aria-label="Instagram @guuh_acai" title="Instagram @guuh_acai">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.7" r="1.2" fill="currentColor"/></svg>
+  </a>
+  <a class="floating-whatsapp" data-whatsapp href="https://wa.me/5531988405083" target="_blank" rel="noopener" aria-label="Falar no WhatsApp" title="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.1 3.9A10.9 10.9 0 0 0 12.3 1C6.3 1 1.4 5.9 1.4 11.9c0 2.1.6 4.1 1.7 5.8L1 23l5.4-1.8c1.7.9 3.6 1.4 5.5 1.4h.4c6 0 10.7-4.9 10.7-10.9 0-2.9-1.1-5.7-2.9-7.8ZM12.3 20.8h-.3c-1.7 0-3.4-.5-4.9-1.3l-.3-.2-3.2 1.1 1.1-3.1-.2-.3a8.9 8.9 0 0 1-1.4-4.8c0-4.9 4-8.9 8.9-8.9 2.4 0 4.6.9 6.3 2.6a8.9 8.9 0 0 1 2.6 6.3c0 4.9-3.9 8.9-8.6 8.9Zm4.9-6.7c-.3-.2-1.7-.9-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.8 1.1-.2.2-.3.2-.6.1-1.6-.8-2.7-1.4-3.8-3.1-.3-.5.3-.5.8-1.7.1-.2 0-.4 0-.5-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.8 2.5.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.1-1.5-.2-.1-.5-.2-.8-.3Z" fill="currentColor"/></svg>
+  </a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="drawer" id="cartDrawer">
+  <div class="drawer-head"><div><span class="kicker" id="cartKicker">SEU PEDIDO</span><h3 id="cartTitle">Minha sacola</h3></div><button id="closeCart">×</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-bottom">
+    <div class="subtotal"><span>Subtotal</span><b id="cartTotal">R$ 0,00</b></div>
+    <div class="delivery-line"><span>Entrega</span><small id="deliveryLabel">Calculada no checkout</small></div>
+    <button class="checkout" id="goCheckout">Continuar pedido →</button>
+    <small>Você poderá informar endereço e forma de pagamento no próximo passo.</small>
+  </div>
+</aside>
+
+<div class="modal" id="productModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-photo"><img id="modalImg" src="" alt=""></div>
+    <div class="modal-content"><span class="pill" id="modalCategory"></span><h3 id="modalTitle"></h3><p id="modalDesc"></p><label class="label" id="modalSizeLabel">Escolha o tamanho</label><div class="sizes" id="sizeOptions"></div><div id="productAddonArea" class="product-addon-area"></div><div class="modal-price"><span>Total</span><b id="modalPrice"></b></div><button class="add-main disabled" id="modalAddButton" onclick="addCurrent()" disabled>Adicionar à sacola</button></div>
+  </div>
+</div>
+
+<div class="modal" id="builderModal">
+  <div class="modal-box builder-box">
+    <button class="modal-close" onclick="closeBuilder()">×</button>
+    <div class="builder-visual"><span>🥣</span><b>MONTE SEU AÇAÍ</b><small>Do seu jeito 💜</small></div>
+    <div class="modal-content"><span class="pill" id="builderPill">Personalize</span><h3 id="builderTitle">Crie seu copo</h3><label class="label" id="builderSizeLabel">Tamanho</label><div class="builder-sizes"><button data-size="500" data-price="22">500ml <b>R$ 22,00</b></button><button data-size="700" data-price="28">700ml <b>R$ 28,00</b></button><button data-size="1000" data-price="37">1 litro <b>R$ 37,00</b></button></div><label class="label" id="builderAddonLabel">Adicionais</label><div class="builder-addons" id="builderAddons"></div><div class="modal-price"><span>Total</span><b id="builderTotal">R$ 22,00</b></div><button class="add-main" id="builderAddButton" onclick="addBuilder()">Adicionar à sacola</button></div>
+  </div>
+</div>
+
+<div class="modal" id="checkoutModal">
+  <div class="checkout-box">
+    <button class="modal-close" onclick="closeCheckout()">×</button>
+    <div class="checkout-head"><span class="kicker" id="checkoutKicker">FINALIZAR PEDIDO</span><h3 id="checkoutTitle">Quase lá! 💜</h3><p id="checkoutDesc">Preencha seus dados para enviar o pedido.</p></div>
+    <div class="checkout-grid">
+      <div>
+        <label id="nameLabel">Nome</label><input id="customerName" placeholder="Seu nome">
+        <label id="phoneLabel">WhatsApp</label><input id="customerPhone" placeholder="(31) 99999-9999" inputmode="tel">
+        <label id="addressLabel">Endereço</label><input id="customerAddress" placeholder="Rua, número, bairro">
+        <label id="complementLabel">Complemento</label><input id="customerComplement" placeholder="Apartamento, referência...">
+        <label id="paymentLabel">Forma de pagamento</label>
+        <div class="payment-options"><button class="pay active" data-pay="Pix">💠 Pix</button><button class="pay" data-pay="Cartão">💳 Cartão</button><button class="pay" data-pay="Na entrega">💵 Na entrega</button></div>
+      </div>
+      <div class="order-summary"><b>Resumo</b><div id="checkoutItems"></div><div class="summary-total"><span>Total</span><strong id="checkoutTotal">R$ 0,00</strong></div><button class="send-order" id="sendOrderButton" onclick="sendOrder()">Enviar pedido →</button><small>O envio será feito pelo WhatsApp configurado pela loja.</small></div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<footer style="text-align:center;padding:28px 16px;color:#8f95a7;font-size:12px">© Guh Açaí • Somente delivery 🛵</footer>
+
+<script>
+(function(){
+  const logo=document.getElementById('adminLogo');
+  if(!logo) return;
+  logo.addEventListener('click', function(e){
+    e.preventDefault();
+    const senha=prompt('🔐 Área administrativa\nDigite a senha:');
+    if(senha === 'scdesign'){
+      sessionStorage.setItem('guhAdminAuth','1');
+      window.location.href='admin.html';
+    } else if(senha !== null){
+      alert('Senha incorreta.');
+    }
+  });
+})();
+</script>
+</body>
+</html>
