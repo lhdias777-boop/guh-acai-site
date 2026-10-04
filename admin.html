@@ -53,7 +53,7 @@ async function publishState(){
     addons: JSON.parse(localStorage.getItem(ADDONS)||"[]")
   };
   const response=await fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json","x-admin-password":sessionStorage.getItem("guhAdminPassword")||""},body:JSON.stringify(payload)});
-  if(!response.ok) throw new Error("Não foi possível publicar as alterações.");
+  if(!response.ok){let detail="HTTP "+response.status;try{const e=await response.json();if(e?.error) detail=e.error}catch(_){} throw new Error(detail);}
   const state=await response.json();
   if(state.settings) localStorage.setItem(SETTINGS,JSON.stringify(state.settings));
   if(Array.isArray(state.products)) localStorage.setItem(KEY,JSON.stringify({products:state.products,updatedAt:state.updatedAt||new Date().toISOString()}));
@@ -67,7 +67,7 @@ async function saveAndPublish(saveFn){
     await publishState();
   }catch(e){
     console.error(e);
-    alert("Não foi possível publicar agora. Verifique se o site está rodando pelo servidor.");
+    alert("Não foi possível publicar agora.\n\n"+(e?.message||"Erro desconhecido")+".");
   }
 }
 function renderSettings(){const box=document.getElementById('settingsForm');box.innerHTML=Object.keys(DEFAULT_SETTINGS).map(k=>{if(k==='logo'||k==='aboutImage'||k==='promoSlide1'||k==='promoSlide2'||k==='promoSlide3'){return `<div class="field full"><label>${labels[k]}</label><div class="image-row"><img id="img-${k}" src="${esc(settings[k]||'')}" onerror="this.style.opacity=.25"><input type="file" accept="image/*" data-img="${k}"></div><button type="button" class="btn clear" data-clear-img="${k}">Remover imagem</button></div>`}const type=k.includes('Color')?'color':'text';const val=esc(settings[k]);return `<div class="field ${textareas.has(k)?'full':''}"><label>${labels[k]||k}</label>${textareas.has(k)?`<textarea data-setting="${k}">${val}</textarea>`:`<input data-setting="${k}" type="${type}" value="${val}">`}</div>`}).join('');box.querySelectorAll('[data-img]').forEach(inp=>inp.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{settings[inp.dataset.img]=r.result;const im=document.getElementById('img-'+inp.dataset.img);im.src=r.result;im.style.opacity=1};r.readAsDataURL(f)});box.querySelectorAll('[data-clear-img]').forEach(b=>b.onclick=()=>{settings[b.dataset.clearImg]='';const im=document.getElementById('img-'+b.dataset.clearImg);im.src='';im.style.opacity=.25})}
