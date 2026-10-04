@@ -99,6 +99,7 @@ try {
     if (Array.isArray(parsed.products) && parsed.products.length) products = parsed.products;
   }
 } catch (e) { console.warn("Não foi possível carregar o catálogo salvo.", e); }
+sanitizeProductImages();
 
 
 let addons=[["Banana",3],["Manga",4],["Morango",5],["Granola",2],["Leite condensado",5],["Leite em pó",3.5],["Nutella",7]];
@@ -107,22 +108,33 @@ let cart=[],current=null,currentSize=null,builderSize=500,builderAddons=[],curre
 const ACaiImageFallbacks={tradicional:"https://img0.didiglobal.com/static/soda_public/do1_saACGHwAxPCZDePcsADW2759216890",mineiro:"https://instadelivery-public.nyc3.cdn.digitaloceanspaces.com/itens/177349157469b55576727e5_75_75.jpeg",sensacao:"https://img0.didiglobal.com/static/soda_public/img_5427aacd0e18b31d585a8be473f91e7b.jpeg",xmorango:"https://static-images.ifood.com.br/image/upload/t_high/pratos/189c7b8b-e603-4743-9012-7ba862c7891d/202202252120_hs25_p.jpg",mix:"https://static.expressodelivery.com.br/imagens/banners/143878/Expresso-Delivery_cf4c1a8817aea4d14460f98b2b0199b4.jpg",tradmorango:"https://static-images.ifood.com.br/image/upload/t_high/pratos/189c7b8b-e603-4743-9012-7ba862c7891d/202202252120_hs25_p.jpg",tnm:"https://static-images.ifood.com.br/image/upload/t_high/pratos/189c7b8b-e603-4743-9012-7ba862c7891d/202202252120_hs25_p.jpg",tmar:"https://static.expressodelivery.com.br/imagens/banners/143878/Expresso-Delivery_cf4c1a8817aea4d14460f98b2b0199b4.jpg",tn:"https://img0.didiglobal.com/static/soda_public/img_5427aacd0e18b31d585a8be473f91e7b.jpeg",tm:"https://static-images.ifood.com.br/image/upload/t_high/pratos/189c7b8b-e603-4743-9012-7ba862c7891d/202202252120_hs25_p.jpg","bala-kids":"https://img0.didiglobal.com/static/soda_public/img_5427aacd0e18b31d585a8be473f91e7b.jpeg","confete-kids":"https://img0.didiglobal.com/static/soda_public/img_5427aacd0e18b31d585a8be473f91e7b.jpeg",vitamina:"https://img0.didiglobal.com/static/soda_public/do1_saACGHwAxPCZDePcsADW2759216890"};
 const PRODUCT_IMAGE_DEFAULTS={
   tradicional:"tradicional.jpg",
-  mineiro:"acai-mineiro.jpg",
+  mineiro:"mineiro. .jpg.jpg",
   sensacao:"sensacao.jpg",
-  xmorango:"xmorango.jpg",
+  xmorango:"xmorango.jpg.jpg",
   mix:"mix-frutas.jpg",
   tradmorango:"tradicional-morango.jpg",
-  tnm:"trufado-ninho-morango.jpg",
+  tnm:"trufado-ninho-morango.jpg.jpg",
   tmar:"trufado-maracuja.jpg",
-  tn:"trufado-ninho-2.jpg",
+  tn:"trufado-ninho.jpg.jpg",
   tm:"trufado-morango-2.jpg",
-  "bala-kids":"amor-verao.jpg",
-  "confete-kids":"amor-verao.jpg",
+  "bala-kids":"amor-verão.jpg.jpg",
+  "confete-kids":"amor-verão.jpg.jpg",
   vitamina:"tradicional.jpg"
 };
 function productImage(product){
   const src=String(product?.img||"").trim();
-  return src || PRODUCT_IMAGE_DEFAULTS[product?.id] || "/fallback-acai.svg";
+  if(!src || src.startsWith("/uploads/") || src.startsWith("data:image/")) return PRODUCT_IMAGE_DEFAULTS[product?.id] || "/fallback-acai.svg";
+  return src;
+}
+function sanitizeProductImages(){
+  products = products.map(p=>{
+    if(!p || typeof p!=="object") return p;
+    const src=String(p.img||"").trim();
+    if(!src || src.startsWith("/uploads/") || src.startsWith("data:image/")){
+      return {...p,img:PRODUCT_IMAGE_DEFAULTS[p.id] || "/fallback-acai.svg"};
+    }
+    return p;
+  });
 }
 function fallbackImage(product){
   return PRODUCT_IMAGE_DEFAULTS[product?.id] || "/fallback-acai.svg";
@@ -222,7 +234,10 @@ async function syncPublishedState(){
     }
     if(Array.isArray(state.products)){
       products=state.products;
+      sanitizeProductImages();
       localStorage.setItem("guhAcaiCatalogV1",JSON.stringify({products,updatedAt:state.updatedAt||new Date().toISOString()}));
+    } else {
+      sanitizeProductImages();
     }
     if(Array.isArray(state.addons)){
       addons=state.addons;
