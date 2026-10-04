@@ -91,7 +91,7 @@ function saveDataUrl(value){
   if(typeof value !== "string") return value;
   if(value.startsWith("/uploads/")) return value;
   if(!value.startsWith("data:image/")) return value;
-  const m = value.match(/^data:image\\/([a-zA-Z0-9.+-]+);base64,(.+)$/s);
+  const m = value.match(/^data:image\/([a-zA-Z0-9.+-]+);base64,(.+)$/s);
   if(!m) return value;
   const extMap = {jpeg:"jpg",jpg:"jpg",png:"png",webp:"webp",gif:"gif"};
   const ext = extMap[m[1].toLowerCase()] || "png";
