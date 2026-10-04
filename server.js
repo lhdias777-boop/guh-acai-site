@@ -141,7 +141,7 @@ function readBody(req){
     let data="", size=0;
     req.on("data",chunk=>{
       size+=chunk.length;
-      if(size>60*1024*1024){reject(new Error("Payload too large"));req.destroy();return;}
+      if(size>150*1024*1024){reject(new Error("Payload too large"));req.destroy();return;}
       data+=chunk;
     });
     req.on("end",()=>resolve(data));
