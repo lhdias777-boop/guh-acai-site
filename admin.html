@@ -69,9 +69,9 @@ async function compactPayload(payload){
 }
 async function publishState(){
   const payload={
-    settings: JSON.parse(localStorage.getItem(SETTINGS)||"{}"),
-    products: JSON.parse(localStorage.getItem(KEY)||'{"products":[]}').products||[],
-    addons: JSON.parse(localStorage.getItem(ADDONS)||"[]")
+    settings: {...settings},
+    products: Array.isArray(catalog) ? JSON.parse(JSON.stringify(catalog)) : [],
+    addons: Array.isArray(addons) ? JSON.parse(JSON.stringify(addons)) : []
   };
   await compactPayload(payload);
   const response=await fetch("/api/state",{method:"POST",headers:{"Content-Type":"application/json","x-admin-password":sessionStorage.getItem("guhAdminPassword")||""},body:JSON.stringify(payload)});
@@ -93,9 +93,9 @@ async function saveAndPublish(saveFn){
   }
 }
 function renderSettings(){const box=document.getElementById('settingsForm');box.innerHTML=Object.keys(DEFAULT_SETTINGS).map(k=>{if(k==='logo'||k==='aboutImage'||k==='promoSlide1'||k==='promoSlide2'||k==='promoSlide3'){return `<div class="field full"><label>${labels[k]}</label><div class="image-row"><img id="img-${k}" src="${esc(settings[k]||'')}" onerror="this.style.opacity=.25"><input type="file" accept="image/*" data-img="${k}"></div><button type="button" class="btn clear" data-clear-img="${k}">Remover imagem</button></div>`}const type=k.includes('Color')?'color':'text';const val=esc(settings[k]);return `<div class="field ${textareas.has(k)?'full':''}"><label>${labels[k]||k}</label>${textareas.has(k)?`<textarea data-setting="${k}">${val}</textarea>`:`<input data-setting="${k}" type="${type}" value="${val}">`}</div>`}).join('');box.querySelectorAll('[data-img]').forEach(inp=>inp.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{settings[inp.dataset.img]=r.result;const im=document.getElementById('img-'+inp.dataset.img);im.src=r.result;im.style.opacity=1};r.readAsDataURL(f)});box.querySelectorAll('[data-clear-img]').forEach(b=>b.onclick=()=>{settings[b.dataset.clearImg]='';const im=document.getElementById('img-'+b.dataset.clearImg);im.src='';im.style.opacity=.25})}
-function saveSettings(){document.querySelectorAll('[data-setting]').forEach(e=>settings[e.dataset.setting]=e.value);localStorage.setItem(SETTINGS,JSON.stringify(settings));const bp=document.getElementById('brandPreview');if(bp)bp.src=settings.logo;flash();}
+function saveSettings(){document.querySelectorAll('[data-setting]').forEach(e=>settings[e.dataset.setting]=e.value);const bp=document.getElementById('brandPreview');if(bp)bp.src=settings.logo;flash();}
 function renderAddons(){document.getElementById('addonsForm').innerHTML=addons.map((a,i)=>`<div class="addon-admin"><input data-aname="${i}" value="${esc(a[0])}" placeholder="Nome"><input data-aprice="${i}" type="number" step="0.01" value="${Number(a[1])}" placeholder="Preço"><button class="btn danger" data-adel="${i}">Excluir</button></div>`).join('');document.querySelectorAll('[data-adel]').forEach(b=>b.onclick=()=>{addons.splice(+b.dataset.adel,1);renderAddons()})}
-function saveAddons(){addons=addons.map((a,i)=>[document.querySelector(`[data-aname="${i}"]`).value.trim(),Number(document.querySelector(`[data-aprice="${i}"]`).value||0)]).filter(a=>a[0]);localStorage.setItem(ADDONS,JSON.stringify(addons));flash()}
+function saveAddons(){addons=addons.map((a,i)=>[document.querySelector(`[data-aname="${i}"]`).value.trim(),Number(document.querySelector(`[data-aprice="${i}"]`).value||0)]).filter(a=>a[0]);flash()}
 function category(c){return c==='acai'?'Açaí':c==='copos'?'Copos montados':'Chup Chup Gourmet'}
 function sizeLabel(size){return String(size)==='1000'?'1 litro':String(size)==='1'?'Unidade':String(size)+' ml'}
 function renderProducts(){
@@ -136,7 +136,7 @@ function collectProducts(){
     card.querySelectorAll('[data-promo]').forEach(inp=>p.promos[inp.dataset.promo]=Number(inp.value||0));
     if(card.dataset.image!==undefined)p.img=card.dataset.image||base[i]?.img||p.img
   });
-  localStorage.setItem(KEY,JSON.stringify({products:catalog,updatedAt:new Date().toISOString()}));flash()
+  flash()
 }
 function addProduct(){const id='produto-'+Date.now();catalog.push({id,cat:'acai',name:'Novo produto',desc:'Descrição do produto',img:'tradicional.jpg',sizes:{500:0,700:0,1000:0},promos:{}});renderProducts();document.getElementById('productsPanel').scrollIntoView({behavior:'smooth'})}
 function flash(message='✓ Salvo!'){const s=document.getElementById('status')||document.createElement('span');s.textContent=message;s.style.display='inline';setTimeout(()=>s.style.display='none',2200)}
