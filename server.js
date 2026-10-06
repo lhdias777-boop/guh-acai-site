@@ -151,6 +151,10 @@ function readBody(req){
 
 const server=http.createServer(async (req,res)=>{
   try{
+    if(process.env.MAINTENANCE_MODE === "1"){
+      res.writeHead(503,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store","Retry-After":"3600"});
+      return res.end(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Guh Açaí — Site temporariamente pausado</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#3b075f,#7517d8);font-family:Arial,sans-serif;color:#fff;text-align:center;padding:24px}main{max-width:520px;background:rgba(255,255,255,.12);padding:42px 28px;border-radius:24px;box-shadow:0 18px 60px rgba(0,0,0,.25)}h1{margin:0 0 12px;font-size:30px}p{margin:8px 0;line-height:1.5;color:#f3eaff}.icon{font-size:52px;margin-bottom:12px}</style></head><body><main><div class="icon">🥣</div><h1>Site temporariamente pausado</h1><p>A Guh Açaí está temporariamente com o site fora do ar.</p><p>Voltaremos em breve. 💜</p></main></body></html>`);
+    }
     if(req.method==="GET" && req.url.split("?")[0]==="/api/state"){
       return send(res,200,readState());
     }
